@@ -67,3 +67,16 @@ probs <- dbinom(xsuccesses, 50, 0.5)
 probs
 sum(probs)
 dbinom(40, 50, 0.5)
+
+# Exam 2
+
+# 9821 trials were performed and the toasted landed butter side down 6101 times.
+binom.confint(x=6101, n=9821, method="ac") # method="ac" for Agresti-Coull
+
+binom.test(35, 55, 0.602)
+
+dbinom(80, 100, 0.5)
+
+binom.test(29, 55, 0.602)
+
+29/55

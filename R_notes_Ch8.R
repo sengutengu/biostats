@@ -206,3 +206,76 @@ snapTest$observed
 snapTest$expected
 
 snapTest$residuals
+
+
+# Exam 2
+
+labels <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+daysMonths <- c(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+daysMonths_probabilities <- daysMonths/365
+daysMonths_probabilities
+
+catData <- read.csv("DataForLabs/falling_cats.csv", stringsAsFactors=T)
+length(catData$month)
+catData$month <- factor(catData$month, levels=c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"))
+head(catData)
+catTable <- table(catData)
+catTable
+
+catTest <- chisq.test(catTable, p=daysMonths_probabilities)
+
+catTest
+catTest$expected-catTest$observed
+
+diceData$outcome <- factor(diceData$outcome, levels=c("one", "two", "three", "four", "five", "six"))
+diceTable <- table(diceData)
+diceExpected <- c(1/6, 1/6, 1/6, 1/6, 1/6, 1/6)*71
+diceExpected
+ObsExp <- data.frame(diceTable, diceExpected)
+ObsExp <- setNames(ObsExp, c("Outcome", "Observed", "Expected"))
+ObsExp
+library(reshape2)
+ObsExp <- melt(ObsExp)
+ObsExp
+
+library(ggplot2)
+ggplot(ObsExp, aes(x = Outcome, y = value, fill = variable)) + 
+  geom_bar(stat = "identity", position = position_dodge()) + 
+  theme_classic() +
+  ylab("N") +
+  scale_fill_discrete(name = "Frequency") +
+  ggtitle("Observed and expected frequencies of sides from a fair die (N=71)")
+
+diceTest <- chisq.test(diceTable, p=c(1/6, 1/6, 1/6, 1/6, 1/6, 1/6))
+diceTest$expected-diceTest$observed
+
+diceTest
+
+# pea
+
+observedGenotypes <- c(24, 43, 13)
+sum(observedGenotypes)
+
+# get proportions of R and r
+frequencyOfG <- ((2*24)+43)/(80*2)
+frequencyOfG
+
+frequencyOfg <- 1-frequencyOfG
+frequencyOfg
+
+# use hardy weinberg to calculate expected frequencies
+expectedGG <- frequencyOfG^2
+expectedGg <- 2*frequencyOfG*frequencyOfg
+expectedgg <- frequencyOfg^2
+
+sum(expectedGG, expectedGg, expectedgg) # should sum to 1
+
+# run the test!
+peaTest <- chisq.test(observedGenotypes, p=c(expectedGG, expectedGg, expectedgg))
+peaTest
+
+summary(peaTest)
+peaTest$observed
+peaTest$expected
+
+peaTest$residuals

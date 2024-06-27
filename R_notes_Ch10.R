@@ -1,3 +1,31 @@
+# R Labs & Notes Ch. 10
+
+#HW Q1 
+mu = 3339
+sigma = 573
+n = 100
+
+sdm = sigma/sqrt(n)
+sdm
+
+qnorm(0.8, mu, sdm, lower.tail=T)
+
+# prob of 2215 or lower birth weight
+pnorm(2215, mu, sigma, lower.tail=T)
+# birth weight less than 90%
+qnorm(0.1, mu, sigma, lower.tail=T)
+# NOTE sigma NOT sdm. 
+# Use sdm ONLY when it's about the sampling distro
+
+
+muPhone <- 94.6
+sigmaPhone <- 63.5
+nPhone <- 125
+sigmaPhone
+nPhone
+sdmPhone <- sigmaPhone/sqrt(nPhone)
+sdmPhone
+
 ###### Ch 10 Lab & Notes
 
 titanicData <- read.csv("DataForLabs/titanic.csv", stringsAsFactors=T)
@@ -76,3 +104,18 @@ qnorm(0.9, mu, sdm, lower.tail=T)
 # and the qnorm value decreases.
 sdm <- sigma/sqrt(500)
 qnorm(0.9, mu, sdm, lower.tail=T)
+
+# Quiz 10
+
+qnorm(0.9, 36.59, 0.43, lower.tail=T)
+qnorm(0.1, 36.59, 0.43, lower.tail=F)
+pnorm(36, 36.59, 0.43, lower.tail=T)
+
+pnorm(36.3, 36.59, 0.43, lower.tail=F)-pnorm(37, 36.59, 0.43, lower.tail=F)
+
+pnorm(37.5, 36.59, 0.43, lower.tail=F)
+
+pnorm(515, 505.6, 9.3, lower.tail=F)
+pnorm(485, 505.6, 9.3, lower.tail=T)
+
+pnorm(500, 505.6, 9.3, lower.tail=F)-pnorm(510, 505.6, 9.3, lower.tail=F)

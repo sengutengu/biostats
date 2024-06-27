@@ -1,0 +1,12 @@
+allData <- read.csv("DataForLabs/ALL.csv",stringsAsFactors = T)
+biostatsData <- read.csv("DataForLabs/biostats_class.csv",stringsAsFactors = T)
+diceData <- read.csv("DataForLabs/dice.csv",stringsAsFactors = T)
+catData <- read.csv("DataForLabs/falling_cats.csv",stringsAsFactors = T)
+helmetData <- read.csv("DataForLabs/helmets.csv",stringsAsFactors = T)
+hospitalData <- read.csv("DataForLabs/HospitalAdmission.csv",stringsAsFactors = T)
+kuruData <- read.csv("DataForLabs/kuru.csv",stringsAsFactors = T)
+screenData <- read.csv("DataForLabs/screening.csv",stringsAsFactors = T)
+smokerData <- read.csv("DataForLabs/smokerBMI.csv",stringsAsFactors = T)
+strokeData <- read.csv("DataForLabs/stroke.csv",stringsAsFactors = T)
+tuberculosisData <- read.csv("DataForLabs/tuberculosis.csv",stringsAsFactors = T)
+

@@ -2,7 +2,6 @@
 source("relrisk.R")
 source("oddsratio.R")
 
-
 ####### Aspirin Example #######
 
 aspirinData <- read.csv("DataForLabs/chap09e2AspirinCancer.csv")
@@ -84,6 +83,17 @@ chisq.test(fishTable2, correct=F)
 # make mosaic plot
 mosaicplot(t(fishTable1), xlab="Infection level", ylab="Relative frequency", main="Title", col=c("darkred", "gold"))
 
+install.packages('plyr')
+library(plyr)
+smokerData <- read.csv("DataForLabs/smokerBMI.csv", stringsAsFactors=T)
+summary(smokerData)
+smokerData$BMI <- factor(smokerData$BMI, levels=c("high", "healthy", "low"))
+smokerData$CurrentSmoker <- factor(smokerData$CurrentSmoker, levels=c("yes", "no"))
+smokerData$CurrentSmoker <- revalue(smokerData$CurrentSmoker, c("yes"="smoker", "no"="nonsmoker"))
+smokerTable <- table(smokerData$CurrentSmoker, smokerData$BMI)
+smokerTable
+mosaicplot(smokerTable, xlab="Smoking status", ylab="Relative frequency of BMI levels", main="Relative frequencies of BMI levels in smokers and nonsmokers", col=c("darkred", "darkgreen", "gold"))
+
 fishTest$observed
 fishTest$expected
 fishTest$observed-fishTest$expected
@@ -148,3 +158,94 @@ summary(gardasilData)
 gardasilTable <- table(gardasilData$cervicalCancer, gardasilData$treatment)
 gardasilTable
 oddsratio(gardasilTable)
+
+# Quiz Q2
+
+widowHealth <- read.csv("DataForLabs/widow_health.csv", stringsAsFactors=T)
+summary(widowHealth)
+head(widowHealth)
+widowTable <- table(widowHealth$health_deterioration, widowHealth$widowed)
+widowTable
+widowTest <- chisq.test(widowTable, correct=F)
+widowTest
+
+widowTest$expected
+widowTest$observed
+widowTest$observed-widowTest$expected
+
+widowTable2 <- t(widowTable)
+widowTable2
+widowTest2 <- chisq.test(widowTable2, correct=F)
+widowTest2
+
+tailMating$tail <- factor(tailMating$tail, levels=c("short", "medium", "long"))
+tailTable <- table(tailMating$tail, tailMating$matingsuccess)
+tailTable
+tailTest <- chisq.test(tailTable, correct=F)
+tailTest
+tailTest$expected
+tailTest$observed
+
+# Q4
+
+plasma <- read.csv("DataForLabs/plasmaTransfusion.csv", stringsAsFactors = T)
+summary(plasma)
+head(plasma)
+
+plasma$treatment <- factor(plasma$treatment, levels=c("Transfusion", "Control"))
+plasmaTable <- table(plasma$response, plasma$treatment)
+plasmaTable
+
+relrisk(plasmaTable)
+
+# Q8
+yawningData <- read.csv("DataForLabs/yawning.csv", stringsAsFactors=T)
+head(yawningData)
+summary(yawningData)
+length(yawningData$faceShown)
+yawningData$yawn <- factor(yawningData$yawn, levels=c("yes", "no"))
+levels(yawningData$yawn) <- c("Yawned", "Did not yawn")
+levels(yawningData$faceShown) <- c("Covered", "Uncovered")
+yawningTable <- table(yawningData$yawn, yawningData$faceShown)
+yawningTable
+
+mosaicplot(yawningTable) # correct formatting leads to wrong axes
+mosaicplot(t(yawningTable)) # t() to transpose table
+
+# eye candy. Looks like equal probability of getting cancer.
+mosaicplot(t(yawningTable), xlab="Eye covering", ylab="Relative frequency", main="", col=c("darkred", "gold"))
+
+allData
+allData$socialActivity <- factor(allData$socialActivity, levels=c("yes", "no"))
+allTable <- table(allData)
+allTable
+oddsratio(allTable)
+1020/5343
+252/895
+
+smokerData
+smokerTable <- table(smokerData)
+smokerData$BMI <- factor(smokerData$BMI, levels=c("low", "healthy", "high"))
+smokerData$CurrentSmoker <- factor(smokerData$CurrentSmoker, levels=c("yes", "no"))
+smokerTable <- table(smokerData$BMI, smokerData$CurrentSmoker)
+smokerTable
+smokerTest <- chisq.test(smokerTable, correct=F)
+smokerTest
+
+mosaicplot(t(smokerTable), main="Title", col=c("darkred", "gold"))
+
+tuberculosisData
+tuberculosisData$group <- factor(tuberculosisData$group, levels=c("tuberculosis", "no tuberculosis"))
+tuberculosisTable <- table(tuberculosisData$group, tuberculosisData$genotype)
+tuberculosisTable
+
+tuberculosisTest <- oddsratio(tuberculosisTable)
+
+helmetData
+helmetTable <- table(helmetData$result, helmetData$type)
+helmetTable
+
+relrisk(helmetTable)
+oddsratio(helmetTable)
+chisq.test(helmetTable, correct=F)
+
