@@ -21,7 +21,7 @@ All standard stuff, but the emphasis on analyzing actual data using R has been r
 is what finally helped me make better sense of statistics.
 
 We used Whitlock & Schluter's *Analysis of Biology Data*, 3rd edition. It's really well-written. I used the 
-2nd edition with no issues. 
+2nd edition with no issues. It comes with very useful [online labs](https://whitlockschluter3e.zoology.ubc.ca/RLabs/).
 
 ## Contents
 In this repository, you'll find the R files I used and wrote for this course, along with the data files.
