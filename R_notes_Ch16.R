@@ -62,3 +62,14 @@ summary(greenData)
 cor.test(greenData$WellBeingScore, greenData$bird)
 
 cocaineData <- read.csv("DataForLabs/CocaineHigh.csv", stringsAsFactors=T)
+
+# Exam
+
+shaqData <- read.csv("DataForLabs/FreeThrow_Height.csv", stringsAsFactors=T)
+summary(shaqData)
+ggplot(shaqData, aes(x=Height, y=FT)) +
+  geom_point() +
+  theme_minimal()
+# correlation coefficient
+cor(shaqData$FT, shaqData$Height)
+cor.test(shaqData$FT, shaqData$Height)

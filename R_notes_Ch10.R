@@ -119,3 +119,8 @@ pnorm(515, 505.6, 9.3, lower.tail=F)
 pnorm(485, 505.6, 9.3, lower.tail=T)
 
 pnorm(500, 505.6, 9.3, lower.tail=F)-pnorm(510, 505.6, 9.3, lower.tail=F)
+
+# Exam
+pnorm(80, 72.57, 15.11, lower.tail=F)
+
+qnorm(0.15, 72.57, 15.11, lower.tail=T)

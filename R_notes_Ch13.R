@@ -331,3 +331,99 @@ distanceData$lnDistance <- log(distanceData$homeDistance)
 summary(distanceData)
 shapiro.test(distanceData$lnDistance)
 exp(t.test(distanceData$lnDistance, mu=0)$conf.int)
+
+
+# Exam
+
+ataxiaData <- read.csv("DataForLabs/SpinocerebellarAtaxia.csv", stringsAsFactors=T)
+summary(ataxiaData)
+
+# two sample design
+ggplot(ataxiaData, aes(x=lifespan)) +
+  geom_histogram() +
+  facet_wrap(~treatment, ncol=1) +
+  theme_classic()
+
+tapply(ataxiaData$lifespan, ataxiaData$treatment, shapiro.test)
+leveneTest(data=ataxiaData, lifespan~treatment, center=mean)
+t.test(data=ataxiaData, lifespan~treatment, var.equal=T)
+
+zebrafishData <- read.csv("DataForLabs/zebrafish_jawjoint.csv", stringsAsFactors = T)
+summary(zebrafishData)
+
+# two sample design
+ggplot(zebrafishData, aes(x=jawjoint_vol)) +
+  geom_histogram() +
+  facet_wrap(~group, ncol=1) +
+  theme_classic()
+
+# doesn't look so normal.
+qqnorm(filter(zebrafishData, group=="hypo")$jawjoint_vol, datax=T)
+qqline(filter(zebrafishData, group=="hypo")$jawjoint_vol, datax=T)
+qqnorm(filter(zebrafishData, group=="wt")$jawjoint_vol, datax=T)
+qqline(filter(zebrafishData, group=="wt")$jawjoint_vol, datax=T)
+
+# both are non-normal.
+tapply(zebrafishData$jawjoint_vol, zebrafishData$group, shapiro.test)
+
+zebrafishData$ln_jawjoint_vol <- log(zebrafishData$jawjoint_vol)
+# log makes data normal
+tapply(zebrafishData$ln_jawjoint_vol, zebrafishData$group, shapiro.test)
+# variance is good
+leveneTest(data=zebrafishData, ln_jawjoint_vol~group, center=mean)
+
+t.test(data=zebrafishData, ln_jawjoint_vol~group, var.equal=T)
+
+crabData <- read.csv("DataForLabs/crab_switches.csv", stringsAsFactors = T)
+summary(crabData)
+
+# two sample design. not so normal
+ggplot(crabData, aes(x=switches)) +
+  geom_histogram() +
+  facet_wrap(~treatment, ncol=1) +
+  theme_classic()
+
+qqnorm(filter(crabData, treatment=="group")$switches, datax=T)
+qqline(filter(crabData, treatment=="group")$switches, datax=T)
+
+qqnorm(filter(crabData, treatment=="solitary")$switches, datax=T)
+qqline(filter(crabData, treatment=="solitary")$switches, datax=T)
+
+tapply(crabData$switches, crabData$treatment, shapiro.test)
+# equal variance
+leveneTest(data=crabData, switches~treatment, center=mean)
+
+t.test(data=crabData, switches~treatment, var.equal=T)
+
+larvalData <- read.csv("DataForLabs/larval_speed.csv", stringsAsFactors=T)
+summary(larvalData)
+
+# seems about equal, kind of normal.
+ggplot(larvalData, aes(x=speed)) +
+  geom_histogram() +
+  facet_wrap(~mutant, ncol=1) +
+  theme_classic()
+
+# all normal
+tapply(larvalData$speed, larvalData$mutant, shapiro.test)
+
+# variances not equal but ss >30 and sd <10x
+leveneTest(data=larvalData, speed~mutant, center=mean)
+sd(filter(larvalData, mutant=="bocks")$speed)
+sd(filter(larvalData, mutant=="koi")$speed)
+sd(filter(larvalData, mutant=="ote")$speed)
+
+larvalModel <- lm(data=larvalData, speed~mutant)
+summary(larvalModel)
+anova(larvalModel)
+
+indigoMassData <- read.csv("DataForLabs/indigobird_mass.csv", stringsAsFactors=T)
+summary(indigoMassData)
+tapply(indigoMassData$mass, indigoMassData$species, shapiro.test)
+leveneTest(data=indigoMassData, mass~species, center=mean)
+indigoMassModel <- lm(data=indigoMassData, mass~species)
+anova(indigoMassModel)
+
+TukeyHSD(aov(indigoMassModel))
+
+bodyData <- read.csv("DataForLabs/elevation_bodysize.csv", stringsAsFactors=T)

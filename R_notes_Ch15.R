@@ -197,3 +197,36 @@ coneData <- read.csv("DataForLabs/cone_size.csv", stringsAsFactors=T)
 coneModel <- lm(coneData$conemass~coneData$habitat)
 anova(coneModel)
 TukeyHSD(aov(coneModel))
+
+# Exam
+
+# Lab 10B
+
+alcoholData <- read.csv("DataForLabs/alcohol_BMI.csv", stringsAsFactors=T)
+alcoholData$alcohol <- factor(alcoholData$alcohol, levels=c("non", "light", "heavy", "very heavy"))
+summary(alcoholData)
+library(ggplot2)
+# looks more or less normal
+ggplot(alcoholData, aes(x=BMI)) +
+  geom_histogram(color='black', fill='darkred') +
+  facet_wrap(~alcohol, ncol=1) +
+  theme_classic()
+
+# Reject null!
+alcoholRegression <- lm(data=alcoholData, BMI~alcohol)
+anova(alcoholRegression)
+
+# post hoc comparison
+TukeyHSD(aov(alcoholRegression))
+
+tapply(alcoholData$BMI, alcoholData$alcohol, max) + 2
+# plotting data
+ggplot(alcoholData, aes(x=alcohol, y=BMI)) +
+  geom_jitter(pch=1, color="darkred", width=0.25) +
+  xlab("Alcohol Consumption") +
+  ylab("BMI") +
+  theme_classic() +
+  annotate(geom="text", x=1, y=32, label="a") +
+  annotate(geom="text", x=2, y=32, label="a") +
+  annotate(geom="text", x=3, y=33, label="a") +
+  annotate(geom="text", x=4, y=30, label="a") 

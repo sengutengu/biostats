@@ -123,4 +123,44 @@ ggplot(plantData, aes(x=nutrients, y=species)) +
 
 plantRegression <- lm(data=plantData, species ~ nutrients)
 summary(plantRegression)
+anova(plantRegression)
 predict(plantRegression, data.frame(nutrients=3))
+
+# Exam
+
+bodyData <- read.csv("DataForLabs/elevation_bodysize.csv", stringsAsFactors=T)
+summary(bodyData)
+ggplot(bodyData, aes(x=elevation, y=bodyPC1)) +
+  geom_point() +
+  geom_smooth(method=lm)
+bodyRegression <- lm(data=bodyData, bodyPC1~elevation)
+bodyRegression
+summary(bodyRegression)
+plot(data=bodyData, residuals(bodyRegression) ~ elevation)
+abline(h=0) # add horizontal line at 0 for baseline
+
+antData <- read.csv("DataForLabs/ant_policing.csv", stringsAsFactors=T)
+summary(antData)
+str(antData)
+ggplot(antData, aes(x=relatedness, y=policing)) +
+  geom_point() +
+  xlab("Relative relatedness of workers to queen") +
+  ylab("Policing behavior of workers")+
+  ggtitle("Kinship to queen and peer policing across ant species")+
+  geom_smooth(method=lm) +
+  theme_classic()
+
+antRegression <- lm(data=antData, policing~relatedness)
+antRegression
+summary(antRegression)
+cor.test(antData$policing, antData$relatedness)
+
+proteinData <- read.csv("DataForLabs/protein_walking.csv", stringsAsFactors = T)
+summary(proteinData)
+ggplot(proteinData, aes(x=protein, y=sixMWD)) +
+  geom_point() +
+  geom_smooth(method=lm)
+
+proteinRegression <- lm(data=proteinData, sixMWD~protein)
+proteinRegression
+summary(proteinRegression)
