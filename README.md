@@ -1,11 +1,11 @@
 # Biostatistics
-BIOL2300, Jeffrey DaCosta, Summer 2024, Boston College
+BIOL2300, Professor Jeffrey DaCosta, Summer 2024, Boston College
 
 ## About
 I took biostatistics this summer and really enjoyed it. I had taken three (!) statistics classes, two of them
 graduate, through the Department of Psychology & Neuroscience before this one. Some things just take a long 
-time to click and statistics has definitely been one of them for me. Maybe it's because I find biological
-data simply more interesting, but on my fourth try, I actually came to understand statistics at a more 
+time to click and statistics has definitely been one of them for me. Maybe it's simply that I find biological
+data more interesting, but on my fourth try, I actually came to understand statistics at a more 
 intuitive level than before. 
 
 Here's the course description:
